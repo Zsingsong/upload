@@ -9,6 +9,7 @@
 #import "BIDViewController.h"
 #import "SetColor.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SetSytle.h"
 @interface BIDViewController ()
 
 @end
@@ -52,6 +53,21 @@
         break;}
             case 1:
             NSLog(@"1");
+        {
+            setStyleView=[[SetSytle alloc]initWithNibName:@"SetSytle" bundle:nil];
+            setStyleView.viewController=self;
+            colorAnimationView.alpha=1.0f;
+            CATransition *animation=[CATransition animation];
+            animation.duration=0.3f;
+            animation.delegate=self;
+            animation.timingFunction=UIViewAnimationCurveEaseInOut;
+            animation.type=kCATransitionMoveIn;
+            animation.subtype=kCATransitionFromBottom;
+            [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
+            [self.colorAnimationView addSubview:setStyleView.view];
+            sender.hidden=YES;
+            break;
+        }
        default:
             break;
     }

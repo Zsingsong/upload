@@ -14,5 +14,7 @@ BIDViewController *viewController;
 }
 @property(strong,nonatomic)BIDViewController *viewController;
 - (IBAction)done:(UIButton *)sender;
+- (IBAction)lineButton:(UIButton *)sender;
+- (IBAction)customButton:(UIButton *)sender;
 
 @end

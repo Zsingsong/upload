@@ -52,4 +52,10 @@
     NSLog(@"%@",viewController);
     viewController.segmentButton.hidden=NO;
 }
+
+- (IBAction)lineButton:(UIButton *)sender {
+}
+
+- (IBAction)customButton:(UIButton *)sender {
+}
 @end

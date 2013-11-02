@@ -9,12 +9,13 @@
 #import "SetSytle.h"
 #import <QuartzCore/QuartzCore.h>
 #import "BIDViewController.h"
+#import "Palette.h"
 @interface SetSytle ()
 
 @end
 
 @implementation SetSytle
-@synthesize viewController;
+@synthesize viewController,palette,sizeSlider,sizeValue,weight;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +29,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    weight=2;
+    sizeSlider.value=0.02;
+    sizeValue.text=@"2";
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -53,9 +58,23 @@
     viewController.segmentButton.hidden=NO;
 }
 
-- (IBAction)lineButton:(UIButton *)sender {
+- (IBAction)changeShape:(UIButton *)sender {
+    //[viewController.palette setShapType];
+     NSLog(@"%@",viewController.palette);
+    palette=viewController.palette;
+    [palette setShapeType:sender.tag];
+    
 }
 
-- (IBAction)customButton:(UIButton *)sender {
+- (IBAction)sizeSliderChange:(UISlider *)sender {
+    sizeValue.text=[NSString stringWithFormat:@"%d",(int)(sender.value*100)];
+    weight=(int)(sender.value*100);
+}
+
+
+- (IBAction)backKeyBoard:(id)sender {
+    [sizeValue resignFirstResponder];
+    sizeSlider.value=sizeValue.text.floatValue/100;
+    weight=(int)sizeValue.text.floatValue;
 }
 @end

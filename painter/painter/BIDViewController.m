@@ -10,17 +10,25 @@
 #import "SetColor.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SetSytle.h"
+#import "Palette.h"
 @interface BIDViewController ()
 
 @end
 
 @implementation BIDViewController
 @synthesize segmentButton,colorAnimationView;
-@synthesize setColorView;
+@synthesize setColorView,palette;
+@synthesize paletteView;
 //========================================================
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    paletteView=palette;
+    [paletteView setViewController:self];
+    palette.currentColor;
+    //palette=(Palette*)paletteView;
+    //[palette setViewController:self];
+    
 // Do any additional setup after loading the view, typically from a nib.
 //    setColorView=[[SetColor alloc]initWithNibName:@"SetColor" bundle:nil];
 //    setColorView.viewController=self;

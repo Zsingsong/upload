@@ -15,13 +15,17 @@
 @end
 
 @implementation SetSytle
-@synthesize viewController,palette,sizeSlider,sizeValue,weight;
+@synthesize viewController,palette,sizeSlider,sizeValue,weight,currentButton,currentWeight,prevButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        currentWeight=2;
+        weight=2;
+        sizeSlider.value=0.02;
+        sizeValue.text=@"2";
     }
     return self;
 }
@@ -29,9 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    weight=2;
-    sizeSlider.value=0.02;
-    sizeValue.text=@"2";
+    
+    weight=currentWeight;
+    sizeSlider.value=currentWeight/100;
+    sizeValue.text=[NSString stringWithFormat:@"%d",currentWeight];
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -56,6 +61,8 @@
     viewController.colorAnimationView.alpha=0.0f;
     NSLog(@"%@",viewController);
     viewController.segmentButton.hidden=NO;
+    [palette setPainWidth:weight];
+    currentWeight=weight;
 }
 
 - (IBAction)changeShape:(UIButton *)sender {
@@ -63,18 +70,23 @@
      NSLog(@"%@",viewController.palette);
     palette=viewController.palette;
     [palette setShapeType:sender.tag];
+//    sender.selected=YES;
+//    sender.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
+    
     
 }
 
 - (IBAction)sizeSliderChange:(UISlider *)sender {
     sizeValue.text=[NSString stringWithFormat:@"%d",(int)(sender.value*100)];
     weight=(int)(sender.value*100);
+    currentWeight=weight;
 }
 
 
 - (IBAction)backKeyBoard:(id)sender {
     [sizeValue resignFirstResponder];
-    sizeSlider.value=sizeValue.text.floatValue/100;
-    weight=(int)sizeValue.text.floatValue;
+    sizeSlider.value=(sizeValue.text.floatValue)/100;
+    weight=(int)(sizeValue.text.floatValue);
+    currentWeight=weight;
 }
 @end

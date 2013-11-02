@@ -45,8 +45,25 @@
     NSInteger index=[control selectedSegmentIndex];
     switch (index) {
         case 0:
-            NSLog(@"clear");
-            break;
+        {NSLog(@"clear");
+            NSError *error;
+            [palette saveCurrentViewToPicture];
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            NSArray *undoFileArray = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
+                                                                  error:&error];
+            int i = 0;
+            for (; i <[undoFileArray count]; i++) {
+                [fileMgr removeItemAtPath:[[palette undoPicturePath]
+                                           stringByAppendingPathComponent:[undoFileArray objectAtIndex:i]]
+                                    error:&error];
+                 
+            }
+            palette.count = 0;
+            NSString *tempPicture = [[NSBundle mainBundle] pathForResource:@"tempPicture" ofType:@"png"];
+            [fileMgr copyItemAtPath:tempPicture toPath:[palette path] error:&error];
+           [palette setAc:KNewAction];
+           [palette setNeedsDisplay];
+            break;}
 
         case 1:
             NSLog(@"1");

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		54AD815E1823CB8A002A7B54 /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = 54AD815D1823CB8A002A7B54 /* Palette.m */; };
+		54ADA988182535FB00FB7535 /* tempPicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ADA987182535FB00FB7535 /* tempPicture.png */; };
 		54AF2187181F65350053CF58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54AF2186181F65350053CF58 /* UIKit.framework */; };
 		54AF2189181F65350053CF58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54AF2188181F65350053CF58 /* Foundation.framework */; };
 		54AF218B181F65350053CF58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54AF218A181F65350053CF58 /* CoreGraphics.framework */; };
@@ -35,6 +36,7 @@
 		54AD815C1823CB8A002A7B54 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Palette.h; path = ../Palette.h; sourceTree = "<group>"; };
 		54AD815D1823CB8A002A7B54 /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Palette.m; path = ../Palette.m; sourceTree = "<group>"; };
 		54AD81601823CFDE002A7B54 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		54ADA987182535FB00FB7535 /* tempPicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempPicture.png; sourceTree = "<group>"; };
 		54AF2183181F65350053CF58 /* painter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = painter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54AF2186181F65350053CF58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		54AF2188181F65350053CF58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -136,6 +138,7 @@
 				54B1980C182166AD00027630 /* image */,
 				54AF218E181F65350053CF58 /* painter-Info.plist */,
 				54AF218F181F65350053CF58 /* InfoPlist.strings */,
+				54ADA987182535FB00FB7535 /* tempPicture.png */,
 				54AF2192181F65350053CF58 /* main.m */,
 				54AF2194181F65350053CF58 /* painter-Prefix.pch */,
 				54AF2198181F65350053CF58 /* Default.png */,
@@ -221,6 +224,7 @@
 				54B5EF711822AF6C00D559C4 /* rect.png in Resources */,
 				54B5EF731822B02300D559C4 /* painter.png in Resources */,
 				54B5EF781822B83300D559C4 /* SetSytle.xib in Resources */,
+				54ADA988182535FB00FB7535 /* tempPicture.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

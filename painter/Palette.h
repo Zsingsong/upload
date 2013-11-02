@@ -10,7 +10,7 @@
 #import "Constants.h"
 @class BIDViewController;
 @interface Palette : UIView
-{
+{   
     CGPoint firstTouch;
     CGPoint lastTouch;
     UIColor *currentColor;
@@ -20,8 +20,14 @@
     NSString *path;
     BOOL haveSave;
     CGContextRef context;
+    NSString *undoPicturePath;
+    CGImageRef imageRef;
+    UIImage *drawImage;
     Action ac;
     BIDViewController *viewController;
+    int count;
+	int record;
+    SEL save;
 }
 
 @property CGPoint firstTouch;
@@ -33,6 +39,14 @@
 @property (strong,nonatomic) NSString *path;
 @property BOOL haveSave;
 @property CGContextRef context;
+@property (strong,nonatomic) NSString *undoPicturePath;
+@property  CGImageRef imageRef;
+@property (strong,nonatomic)UIImage *drawImage;
 @property Action ac;
 @property (strong,nonatomic) BIDViewController *viewController;
+@property int count;
+@property int record;
+@property SEL save;
+//save current view to picture
+- (void)saveCurrentViewToPicture;
 @end

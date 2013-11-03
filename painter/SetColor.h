@@ -12,16 +12,19 @@
 {
     BIDViewController *viewController;
 }
+@property (strong, nonatomic) IBOutlet UILabel *preview;
 @property(strong,nonatomic)BIDViewController *viewController;
 @property (strong, nonatomic) IBOutlet UIView *showColorView;
-@property (strong, nonatomic) IBOutlet UIProgressView *redSlider;
+@property (strong, nonatomic) IBOutlet UISlider *redSlider;
 @property (strong, nonatomic) IBOutlet UITextField *redValue;
-@property (strong, nonatomic) IBOutlet UIProgressView *greenSlider;
+@property (strong, nonatomic) IBOutlet UISlider *greenSlider;
 @property (strong, nonatomic) IBOutlet UITextField *greenValue;
-@property (strong, nonatomic) IBOutlet UIView *blueSlider;
-@property (strong, nonatomic) IBOutlet UIProgressView *opacitySlider;
+@property (strong, nonatomic) IBOutlet UISlider *blueSlider;
+@property (strong, nonatomic) IBOutlet UISlider *opacitySlider;
 @property (strong, nonatomic) IBOutlet UITextField *blueValue;
-@property (strong, nonatomic) IBOutlet UITextField *opcityValue;
+@property (strong, nonatomic) IBOutlet UITextField *opacityValue;
+- (IBAction)changeColor:(id)sender;
+- (IBAction)backKeyBoard:(id)sender;
 - (IBAction)done:(UIButton *)sender;
-
+- (IBAction)reset:(id)sender;
 @end

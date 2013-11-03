@@ -73,8 +73,8 @@
     context=UIGraphicsGetCurrentContext();
     CGContextSetLineJoin(context, kCGLineJoinMiter);
     CGContextSetLineCap(context, kCGLineCapRound);
-    CGContextSetLineWidth(context, self.painWidth);
-    CGContextSetStrokeColorWithColor(context, currentColor.CGColor);
+    CGContextSetLineWidth(context, (float)viewController.currentWeight);
+    CGContextSetStrokeColorWithColor(context, viewController.currentColor.CGColor);
     CGContextSetFillColorWithColor(context, currentColor.CGColor);
     CGRect currentRect = CGRectMake(
 								    (firstTouch.x > lastTouch.x)?lastTouch.x : firstTouch.x,

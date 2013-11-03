@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (viewController.currentWeight==-1) {
+    if (viewController.currentWeight==0) {
         weight=2;
        viewController.tempShapButton=lineButton;
     }
@@ -83,8 +83,9 @@
     [self.view removeFromSuperview];
     viewController.colorAnimationView.alpha=0.0f;
     NSLog(@"%@",viewController);
-    [palette setPainWidth:weight];
-    viewController.currentWeight=weight;
+    //[palette setPainWidth:weight];
+   // viewController.currentWeight=weight;
+    viewController.penButtonItem.enabled=YES;
 }
 
 - (IBAction)changeShape:(UIButton *)sender {

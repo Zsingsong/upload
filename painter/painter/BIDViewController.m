@@ -20,11 +20,14 @@
 @synthesize setColorView,palette,setStyleView;
 @synthesize paletteView;
 @synthesize currentWeight,tempShapButton;
+@synthesize colorButtonItem,parentViewController,trashButtonItem;
+@synthesize currentColor,colorFlag;
 //========================================================
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    currentWeight=-1;
+    currentWeight=0;
+    colorFlag=YES;
     paletteView=palette;
     [paletteView setViewController:self];
     palette.currentColor;
@@ -55,6 +58,7 @@
     animation.subtype=kCATransitionFromBottom;
     [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
     [self.colorAnimationView addSubview:setColorView.view];
+    self.colorButtonItem.enabled=NO;
 }
 
 - (IBAction)penButton:(id)sender {
@@ -69,6 +73,9 @@
     animation.subtype=kCATransitionFromBottom;
     [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
     [self.colorAnimationView addSubview:setStyleView.view];
+//    UIBarButtonItem *item=sender;
+//    item.enabled=NO;
+    self.penButtonItem.enabled=NO;
 }
 
 - (IBAction)trashButton:(id)sender {
@@ -99,9 +106,60 @@
 }
 
 - (IBAction)saveButton:(id)sender {
-    UIActionSheet *saveView=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:@"save paint" otherButtonTitles:nil];
-    [saveView showInView:self.view];
+//    UIActionSheet *saveView=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:@"save paint" otherButtonTitles:nil];
+//    [saveView showInView:self.view];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"保存名称"
+                                                    message:@"请输入名称"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"cancel"
+                                          otherButtonTitles:@"OK", nil];
+    // 基本输入框，显示实际输入的内容
+    //alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+   // UITextField *tf = [alert textFieldAtIndex:0];
+   // tf.keyboardType = UIKeyboardTypeDefault;
+    [alert show];
+
 }
+//=======================actionSheet delgate=========================
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        NSLog(@"save!!!");
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"保存名称"
+                                                        message:@"请输入名称"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"cancel"
+                                              otherButtonTitles:@"OK", nil];
+        // 基本输入框，显示实际输入的内容
+        //alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        // 用户名，密码登录框
+        //    alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        // 密码形式的输入框，输入字符会显示为圆点
+        //    alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        
+        //设置输入框的键盘类型
+       // UITextField *tf = [alert textFieldAtIndex:0];
+       // tf.keyboardType = UIKeyboardTypeDefault;
+       // NSString *text = tf.text;
+       // NSLog(@"INPUT11:%@", text);
+        [alert show];
+       
+    }
+
+}
+//=====================alert delegate================================
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"INPUT222:");
+    if (buttonIndex==1) {
+        UITextField *tf = [alertView textFieldAtIndex:0];
+        NSString *text = tf.text;
+        NSLog(@"INPUT222:%@", text);
+    }
+    
+
+}
+
 
 - (IBAction)cameraButton:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {

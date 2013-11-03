@@ -47,23 +47,45 @@
         case 0:
         {NSLog(@"clear");
             NSError *error;
-            [palette saveCurrentViewToPicture];
+            //[palette saveCurrentViewToPicture];
             NSFileManager *fileMgr = [NSFileManager defaultManager];
             NSArray *undoFileArray = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
                                                                   error:&error];
             int i = 0;
+                NSLog(@"count: %d",[undoFileArray count]);
             for (; i <[undoFileArray count]; i++) {
+                NSLog(@"%@",[undoFileArray objectAtIndex:i]);
+                NSString *content=[NSString stringWithContentsOfFile:[undoFileArray objectAtIndex:i]  encoding:NSUTF8StringEncoding error:nil];
+                NSLog(@"文件读取成功: %@",content);
                 [fileMgr removeItemAtPath:[[palette undoPicturePath]
                                            stringByAppendingPathComponent:[undoFileArray objectAtIndex:i]]
                                     error:&error];
-                 
             }
+ 
             palette.count = 0;
             NSString *tempPicture = [[NSBundle mainBundle] pathForResource:@"tempPicture" ofType:@"png"];
-            [fileMgr copyItemAtPath:tempPicture toPath:[palette path] error:&error];
-           [palette setAc:KNewAction];
+            NSLog(@"temp:%@",tempPicture);
+            BOOL K= [fileMgr copyItemAtPath:tempPicture toPath:[palette path] error:&error];
+             if (K ==YES) {
+                 NSLog(@"YES");
+             }
+            
+            
+             NSArray *undoFileArray1 = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
+                                                                  error:&error];
+             NSLog(@"jjjjjcount: %d",[undoFileArray1 count]);
+            int j = 0;
+            for (; j <[undoFileArray1 count]; j++) {
+               
+                NSLog(@"jjjj%@",[undoFileArray1 objectAtIndex:j]);
+            }
+             ;
+           
+	       [palette setAc:KNewAction];
            [palette setNeedsDisplay];
-            break;}
+            //[[UIImage imageWithContentsOfFile:palette.path] drawInRect:[palette bounds]];
+            break;
+        }
 
         case 1:
             NSLog(@"1");

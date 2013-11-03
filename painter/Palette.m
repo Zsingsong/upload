@@ -10,7 +10,7 @@
 #import "BIDViewController.h"
 #import <QuartzCore/QuartzCore.h>
 @implementation Palette
-@synthesize firstTouch,lastTouch,currentColor,painWidth,image,path,haveSave,context,ac,shapeType,viewController,imageRef,undoManager,record,count,save;
+@synthesize firstTouch,lastTouch,currentColor,painWidth,image,path,haveSave,context,ac,shapeType,viewController,imageRef,undoManager,record,count,save,undoPicturePath,drawImage;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
 	if ( (self = [super initWithCoder:aDecoder]) ) {
@@ -18,16 +18,27 @@
         save=@selector(saveCurrentViewToPicture);
 		self.currentColor = [UIColor blackColor];
 		self.painWidth = 2.0f;
+        self.count=0;
         NSArray *documentPaths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         self.path=[documentPaths objectAtIndex:0];
         self.undoPicturePath=[documentPaths objectAtIndex:0];
-        NSString *fileName = [[[NSString alloc] initWithFormat:@"%@",@"painPicture"]stringByAppendingString:@".png"];
+        NSLog(@"self.path before :%@",self.path);
+   		//存储绘图的图片
+		NSString *fileName = [[[NSString alloc] initWithFormat:@"%@",@"painPicture"] 
+                              stringByAppendingString:@".png"];
 		self.path = [self.path stringByAppendingPathComponent:fileName];
-		
+		 NSLog(@"self.path after :%@",self.path);
 		NSError *error;
 		NSFileManager *fileMgr = [NSFileManager defaultManager];
-		[fileMgr removeItemAtPath:self.path error:&error];
-		[fileMgr copyItemAtPath:@"tempPicture.png" toPath:self.path error:&error];
+	    [fileMgr removeItemAtPath:self.path error:&error];
+        NSString *tempPicture = [[NSBundle mainBundle] pathForResource:@"tempPicture" ofType:@"png"];
+
+		BOOL k=[fileMgr copyItemAtPath:tempPicture toPath:self.path error:&error];
+        
+        if (k) {
+            NSLog(@"yes");
+        }else NSLog(@"aaano");
+         NSLog(@"2:%@",self.path);
     }
     return self;
 }
@@ -55,10 +66,12 @@
     //先加载上一次的绘图结果    
 	image = [UIImage imageWithContentsOfFile:self.path];
 	[image drawInRect:[self bounds]];
-    
+    if (ac == KUndoAction || ac == KNewAction) {
+		return;
+	}
     
     context=UIGraphicsGetCurrentContext();
-    CGContextSetLineJoin(context, kCGLineJoinRound);
+    CGContextSetLineJoin(context, kCGLineJoinMiter);
     CGContextSetLineCap(context, kCGLineCapRound);
     CGContextSetLineWidth(context, self.painWidth);
     CGContextSetStrokeColorWithColor(context, currentColor.CGColor);
@@ -99,7 +112,6 @@
 		image = [UIImage imageWithCGImage:imageRef];
 		CGImageRelease(imageRef);
 		[UIImagePNGRepresentation(image) writeToFile:self.path atomically:YES];
-		
 		self.haveSave = NO;
 	}
 }
@@ -109,7 +121,7 @@
 
 	UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	ac = KPainAction;
-    [self saveCurrentViewToPicture];
+  // [self saveCurrentViewToPicture];
 	firstTouch = [touch locationInView:self];
 	lastTouch = [touch locationInView:self];
 	haveSave = NO;
@@ -124,32 +136,28 @@
 	}
 	
 	lastTouch = [touch locationInView:self];
-	
 	[self setNeedsDisplay];
 	
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	UITouch *touch = [[touches allObjects] objectAtIndex:0];
+    UITouch *touch = [[touches allObjects] objectAtIndex:0];
 	lastTouch = [touch locationInView:self];
 	haveSave = YES;
-	//[self.viewController performSelector:@selector(checkUndoAndHideIfNeeded)];
-    //重绘画布
-	[self setNeedsDisplay];}
+	[self setNeedsDisplay];
+    [self saveCurrentViewToPicture];
+}
 
 -(void)saveCurrentViewToPicture {
     UIGraphicsBeginImageContext([self bounds].size);
-   // CALayer *layer=self.layer;
 	[self.layer renderInContext:UIGraphicsGetCurrentContext()];
-     
 	image = UIGraphicsGetImageFromCurrentImageContext();
 	if (self.count == 100) {
 		self.count = 0;
 	}
 	NSString *writeToFileName = [[NSString alloc] initWithFormat:@"%@%d.png",@"undoPicture",self.count++];
-	//NSLog([self.undoPicturePath stringByAppendingPathComponent:[[NSString alloc] initWithFormat:@"%@%d.png",@"undoPicture",self.count++]]);
 	[UIImagePNGRepresentation(image) writeToFile:
-	 [self.undoPicturePath stringByAppendingPathComponent:writeToFileName]
+    [self.undoPicturePath stringByAppendingPathComponent:writeToFileName]
 									  atomically:YES];
 	UIGraphicsEndImageContext();
 }

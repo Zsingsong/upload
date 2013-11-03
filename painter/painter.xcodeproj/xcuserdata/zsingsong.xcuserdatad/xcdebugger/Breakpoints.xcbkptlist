@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "painter/BIDViewController.m"
-         timestampString = "405105569.5946"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "103"
-         endingLineNumber = "103"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-changeSegment:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "painter/BIDViewController.m"
-         timestampString = "405105569.5946"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
+         startingLineNumber = "98"
+         endingLineNumber = "98"
          landmarkName = "-changeSegment:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "painter/BIDViewController.m"
-         timestampString = "405105569.5946"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
+         startingLineNumber = "98"
+         endingLineNumber = "98"
          landmarkName = "-changeSegment:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "painter/BIDViewController.m"
-         timestampString = "405105569.5946"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
          landmarkName = "-changeSegment:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Palette.m"
-         timestampString = "405102979.331021"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
          landmarkName = "-saveCurrentViewToPicture"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Palette.m"
-         timestampString = "405102979.331021"
+         timestampString = "405162709.469393"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
+         startingLineNumber = "154"
+         endingLineNumber = "154"
          landmarkName = "-saveCurrentViewToPicture"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,11 +164,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "painter/BIDViewController.m"
-         timestampString = "405105569.5946"
+         timestampString = "405145038.592769"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
          landmarkName = "-changeSegment:"
          landmarkType = "5">
       </FileBreakpoint>

@@ -14,6 +14,9 @@
 {
     SetColor *setColorView;
     SetSytle *setStyleView;
+    NSInteger currentWeight;
+    UIButton *tempShapButton;
+    
 }
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segmentButton;
 @property (strong, nonatomic) SetColor *setColorView;
@@ -23,5 +26,11 @@
 //@property (strong, nonatomic) IBOutlet UIView *paletteView;
 @property (strong, nonatomic) Palette *paletteView;
 @property (strong, nonatomic) IBOutlet Palette *palette;
-
+@property (strong, nonatomic) UIButton *tempShapButton;
+@property NSInteger currentWeight;
+- (IBAction)colorButton:(id)sender;
+- (IBAction)penButton:(id)sender;
+- (IBAction)trashButton:(id)sender;
+- (IBAction)saveButton:(id)sender;
+- (IBAction)cameraButton:(id)sender;
 @end

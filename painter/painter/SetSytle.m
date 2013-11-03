@@ -15,29 +15,52 @@
 @end
 
 @implementation SetSytle
-@synthesize viewController,palette,sizeSlider,sizeValue,weight,currentButton,currentWeight,prevButton;
+@synthesize viewController,palette,sizeSlider,sizeValue,weight,currentButton,prevButton;
+@synthesize lineButton,circleButton,customButton,rectButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        currentWeight=2;
-        weight=2;
-        sizeSlider.value=0.02;
-        sizeValue.text=@"2";
-    }
+         
+           }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    weight=currentWeight;
-    sizeSlider.value=currentWeight/100;
-    sizeValue.text=[NSString stringWithFormat:@"%d",currentWeight];
-    
+    if (viewController.currentWeight==-1) {
+        weight=2;
+       viewController.tempShapButton=lineButton;
+    }
+    else
+    {
+        weight=viewController.currentWeight;
+        switch (viewController.tempShapButton.tag) {
+            case 0:
+                viewController.tempShapButton=lineButton;
+                break;
+            case 1:
+                viewController.tempShapButton=customButton;break;
+            case 2:
+                viewController.tempShapButton=rectButton;break;
+            case 3:
+                viewController.tempShapButton=customButton;
+                break;
+            default:
+                break;
+        }
+
+    }
+    sizeValue.text=[NSString stringWithFormat:@"%d",weight];
+    sizeSlider.value=weight/100.0;
+    NSLog(@"tag: %@",viewController.tempShapButton);
+    viewController.tempShapButton.selected=YES;
+
+    viewController.tempShapButton.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -60,26 +83,26 @@
     [self.view removeFromSuperview];
     viewController.colorAnimationView.alpha=0.0f;
     NSLog(@"%@",viewController);
-    viewController.segmentButton.hidden=NO;
     [palette setPainWidth:weight];
-    currentWeight=weight;
+    viewController.currentWeight=weight;
 }
 
 - (IBAction)changeShape:(UIButton *)sender {
-    //[viewController.palette setShapType];
+    viewController.tempShapButton.selected=NO;
+    viewController.tempShapButton.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+       viewController.tempShapButton=sender;
+        
      NSLog(@"%@",viewController.palette);
     palette=viewController.palette;
     [palette setShapeType:sender.tag];
-//    sender.selected=YES;
-//    sender.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
-    
-    
-}
+     sender.selected=YES;
+     sender.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:0.2];
+    }
 
 - (IBAction)sizeSliderChange:(UISlider *)sender {
     sizeValue.text=[NSString stringWithFormat:@"%d",(int)(sender.value*100)];
     weight=(int)(sender.value*100);
-    currentWeight=weight;
+    viewController.currentWeight=weight;
 }
 
 
@@ -87,6 +110,6 @@
     [sizeValue resignFirstResponder];
     sizeSlider.value=(sizeValue.text.floatValue)/100;
     weight=(int)(sizeValue.text.floatValue);
-    currentWeight=weight;
+    viewController.currentWeight=weight;
 }
 @end

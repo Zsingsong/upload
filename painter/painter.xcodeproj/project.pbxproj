@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54ACF933182665220001DCE2 /* pen.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ACF932182665220001DCE2 /* pen.png */; };
+		54ACF935182666290001DCE2 /* colors.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ACF934182666290001DCE2 /* colors.png */; };
+		54ACF939182668D00001DCE2 /* bucket.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ACF938182668D00001DCE2 /* bucket.png */; };
+		54ACF93B18266F510001DCE2 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ACF93A18266F510001DCE2 /* save.png */; };
+		54ACF93D1826738B0001DCE2 /* source.txt in Resources */ = {isa = PBXBuildFile; fileRef = 54ACF93C1826738B0001DCE2 /* source.txt */; };
 		54AD815E1823CB8A002A7B54 /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = 54AD815D1823CB8A002A7B54 /* Palette.m */; };
 		54ADA988182535FB00FB7535 /* tempPicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 54ADA987182535FB00FB7535 /* tempPicture.png */; };
 		54AF2187181F65350053CF58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54AF2186181F65350053CF58 /* UIKit.framework */; };
@@ -33,6 +38,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		54ACF932182665220001DCE2 /* pen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pen.png; sourceTree = "<group>"; };
+		54ACF934182666290001DCE2 /* colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colors.png; sourceTree = "<group>"; };
+		54ACF938182668D00001DCE2 /* bucket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucket.png; sourceTree = "<group>"; };
+		54ACF93A18266F510001DCE2 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		54ACF93C1826738B0001DCE2 /* source.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = source.txt; sourceTree = "<group>"; };
 		54AD815C1823CB8A002A7B54 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Palette.h; path = ../Palette.h; sourceTree = "<group>"; };
 		54AD815D1823CB8A002A7B54 /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Palette.m; path = ../Palette.m; sourceTree = "<group>"; };
 		54AD81601823CFDE002A7B54 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -135,6 +145,7 @@
 		54AF218D181F65350053CF58 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				54ACF93C1826738B0001DCE2 /* source.txt */,
 				54B1980C182166AD00027630 /* image */,
 				54AF218E181F65350053CF58 /* painter-Info.plist */,
 				54AF218F181F65350053CF58 /* InfoPlist.strings */,
@@ -151,6 +162,10 @@
 		54B1980C182166AD00027630 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				54ACF93A18266F510001DCE2 /* save.png */,
+				54ACF938182668D00001DCE2 /* bucket.png */,
+				54ACF934182666290001DCE2 /* colors.png */,
+				54ACF932182665220001DCE2 /* pen.png */,
 				54B5EF721822B02300D559C4 /* painter.png */,
 				54B5EF681822AF6C00D559C4 /* circle.png */,
 				54B5EF691822AF6C00D559C4 /* custom.png */,
@@ -225,6 +240,11 @@
 				54B5EF731822B02300D559C4 /* painter.png in Resources */,
 				54B5EF781822B83300D559C4 /* SetSytle.xib in Resources */,
 				54ADA988182535FB00FB7535 /* tempPicture.png in Resources */,
+				54ACF933182665220001DCE2 /* pen.png in Resources */,
+				54ACF935182666290001DCE2 /* colors.png in Resources */,
+				54ACF939182668D00001DCE2 /* bucket.png in Resources */,
+				54ACF93B18266F510001DCE2 /* save.png in Resources */,
+				54ACF93D1826738B0001DCE2 /* source.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

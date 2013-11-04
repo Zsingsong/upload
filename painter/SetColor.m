@@ -29,14 +29,35 @@
 {
     //================init==========================================
     [super viewDidLoad];
-    preview.backgroundColor=[UIColor colorWithRed:redSlider.value green:greenSlider.value blue:blueSlider.value alpha:opacitySlider.value];
+    if (viewController.colorFlag) {
+        preview.backgroundColor=[UIColor colorWithRed:redSlider.value green:greenSlider.value blue:blueSlider.value alpha:opacitySlider.value];
+  
+        viewController.colorFlag=NO;
+    }
+    else
+    {
+       
+        int numComponents = CGColorGetNumberOfComponents([viewController.currentColor CGColor]);
+        if (numComponents==4) 
+        {
+            const CGFloat *components = CGColorGetComponents([viewController.currentColor CGColor]);
+            redSlider.value = components[0];
+            greenSlider.value = components[1];
+            blueSlider.value = components[2];
+            opacitySlider.value = components[3];
+            
+        }
+        
+        preview.backgroundColor=viewController.currentColor;
+    
+    }
     redValue.text = [[NSString alloc] initWithFormat:@"%d", (int)(redSlider.value*255)];
-	greenValue.text = [[NSString alloc] initWithFormat:@"%d",
+    greenValue.text = [[NSString alloc] initWithFormat:@"%d",
                        (int)(greenSlider.value*255)];
-	blueValue.text = [[NSString alloc] initWithFormat:@"%d",
+    blueValue.text = [[NSString alloc] initWithFormat:@"%d",
                       (int)(blueSlider.value*255)];
-	opacityValue.text = [[NSString alloc] initWithFormat:@"%.0f%@",
-                        opacitySlider.value*100,@"%"] ;
+    opacityValue.text = [[NSString alloc] initWithFormat:@"%.0f%@",
+                         opacitySlider.value*100,@"%"] ;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -55,6 +76,7 @@
                       (int)(blueSlider.value*255)];
 	opacityValue.text = [[NSString alloc] initWithFormat:@"%.0f%@",
                          opacitySlider.value*100,@"%"] ;
+    viewController.currentColor=preview.backgroundColor;
 }
 //==================================================================
 - (IBAction)backKeyBoard:(id)sender {
@@ -66,6 +88,7 @@
     redSlider.value=redValue.text.floatValue/255;
     greenSlider.value=greenValue.text.floatValue/255;
     blueSlider.value=blueValue.text.floatValue/255;
+      viewController.currentColor=preview.backgroundColor;
     
 }
 //==================================================================
@@ -82,7 +105,7 @@
     [self.view removeFromSuperview];
     viewController.colorAnimationView.alpha=0.0f;
     NSLog(@"%@",viewController);
-    viewController.segmentButton.hidden=NO;
+    viewController.colorButtonItem.enabled=YES;
 }
 
 - (IBAction)reset:(id)sender {
@@ -98,6 +121,8 @@
                       (int)(blueSlider.value*255)];
 	opacityValue.text = [[NSString alloc] initWithFormat:@"%.0f%@",
                         opacitySlider.value*100,@"%"] ;
+    
+    viewController.currentColor=preview.backgroundColor;
 
 }
 @end

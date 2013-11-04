@@ -17,12 +17,17 @@
 
 @implementation BIDViewController
 @synthesize segmentButton,colorAnimationView;
-@synthesize setColorView,palette;
+@synthesize setColorView,palette,setStyleView;
 @synthesize paletteView;
+@synthesize currentWeight,tempShapButton;
+@synthesize colorButtonItem,parentViewController,trashButtonItem;
+@synthesize currentColor,colorFlag;
 //========================================================
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    currentWeight=0;
+    colorFlag=YES;
     paletteView=palette;
     [paletteView setViewController:self];
     palette.currentColor;
@@ -39,125 +44,146 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 //========================================================
-- (IBAction)changeSegment:(UISegmentedControl *)sender {
-    UISegmentedControl *control=sender;
-    NSInteger index=[control selectedSegmentIndex];
-    switch (index) {
-        case 0:
-        {NSLog(@"clear");
-            NSError *error;
-            //[palette saveCurrentViewToPicture];
-            NSFileManager *fileMgr = [NSFileManager defaultManager];
-            NSArray *undoFileArray = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
-                                                                  error:&error];
-            int i = 0;
-                NSLog(@"count: %d",[undoFileArray count]);
-            for (; i <[undoFileArray count]; i++) {
-                NSLog(@"%@",[undoFileArray objectAtIndex:i]);
-                NSString *content=[NSString stringWithContentsOfFile:[undoFileArray objectAtIndex:i]  encoding:NSUTF8StringEncoding error:nil];
-                NSLog(@"文件读取成功: %@",content);
-                [fileMgr removeItemAtPath:[[palette undoPicturePath]
-                                           stringByAppendingPathComponent:[undoFileArray objectAtIndex:i]]
-                                    error:&error];
-            }
- 
-            palette.count = 0;
-            NSString *tempPicture = [[NSBundle mainBundle] pathForResource:@"tempPicture" ofType:@"png"];
-            NSLog(@"temp:%@",tempPicture);
-            BOOL K= [fileMgr copyItemAtPath:tempPicture toPath:[palette path] error:&error];
-             if (K ==YES) {
-                 NSLog(@"YES");
-             }
-            
-            
-             NSArray *undoFileArray1 = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
-                                                                  error:&error];
-             NSLog(@"jjjjjcount: %d",[undoFileArray1 count]);
-            int j = 0;
-            for (; j <[undoFileArray1 count]; j++) {
-               
-                NSLog(@"jjjj%@",[undoFileArray1 objectAtIndex:j]);
-            }
-             ;
-           
-	       [palette setAc:KNewAction];
-           [palette setNeedsDisplay];
-            //[[UIImage imageWithContentsOfFile:palette.path] drawInRect:[palette bounds]];
-            break;
-        }
+- (IBAction)colorButton:(id)sender {
+    setColorView=[[SetColor alloc]initWithNibName:@"SetColor" bundle:nil];
+    setColorView.viewController=self;
+    colorAnimationView.alpha=1.0f;
+    CATransition *animation=[CATransition animation];
+    animation.duration=0.3f;
+    animation.delegate=self;
+    animation.timingFunction=UIViewAnimationCurveEaseInOut;
+    animation.type=kCATransitionMoveIn;
+    animation.subtype=kCATransitionFromBottom;
+    [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
+    [self.colorAnimationView addSubview:setColorView.view];
+    self.colorButtonItem.enabled=NO;
+}
 
-        case 1:
-            NSLog(@"1");
-        {
-            setStyleView=[[SetSytle alloc]initWithNibName:@"SetSytle" bundle:nil];
-            setStyleView.viewController=self;
-            colorAnimationView.alpha=1.0f;
-            CATransition *animation=[CATransition animation];
-            animation.duration=0.3f;
-            animation.delegate=self;
-            animation.timingFunction=UIViewAnimationCurveEaseInOut;
-            animation.type=kCATransitionMoveIn;
-            animation.subtype=kCATransitionFromBottom;
-            [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
-            [self.colorAnimationView addSubview:setStyleView.view];
-            sender.hidden=YES;
-            break;
-        }
-        case 2:
-        {
-            setColorView=[[SetColor alloc]initWithNibName:@"SetColor" bundle:nil];
-            setColorView.viewController=self;
-            colorAnimationView.alpha=1.0f;
-            CATransition *animation=[CATransition animation];
-            animation.duration=0.3f;
-            animation.delegate=self;
-            animation.timingFunction=UIViewAnimationCurveEaseInOut;
-            animation.type=kCATransitionMoveIn;
-            animation.subtype=kCATransitionFromBottom;
-            [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
-            [self.colorAnimationView addSubview:setColorView.view];
-            sender.hidden=YES;
-            break;}
-            
-        case 3:
-            NSLog(@"earse");
-            break;
+- (IBAction)penButton:(id)sender {
+    setStyleView=[[SetSytle alloc]initWithNibName:@"SetSytle" bundle:nil];
+    setStyleView.viewController=self;
+    colorAnimationView.alpha=1.0f;
+    CATransition *animation=[CATransition animation];
+    animation.duration=0.3f;
+    animation.delegate=self;
+    animation.timingFunction=UIViewAnimationCurveEaseInOut;
+    animation.type=kCATransitionMoveIn;
+    animation.subtype=kCATransitionFromBottom;
+    [[colorAnimationView layer]addAnimation:animation forKey:@"animation"];
+    [self.colorAnimationView addSubview:setStyleView.view];
+//    UIBarButtonItem *item=sender;
+//    item.enabled=NO;
+    self.penButtonItem.enabled=NO;
+}
+
+- (IBAction)trashButton:(id)sender {
+    NSError *error;
+    //[palette saveCurrentViewToPicture];
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSArray *undoFileArray = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
+                                                          error:&error];
+    int i = 0;
+    for (; i <[undoFileArray count]; i++) {
+        [fileMgr removeItemAtPath:[[palette undoPicturePath]
+                                   stringByAppendingPathComponent:[undoFileArray objectAtIndex:i]]
+                            error:&error];
+    }
     
-        case 4:
-            {
-                UIActionSheet *saveView=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:@"save paint" otherButtonTitles:nil];
-                [saveView showInView:self.view];
-            
-                break;
-            }
-            
-        case 5:
-           {
-               if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                   UIImagePickerController *picker=[[UIImagePickerController alloc]init];
-                   picker.delegate=self;
-                   picker.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
-                   //[self presentModalViewController:picker animated:YES];
-                   //[self presentViewController: picker animated:YES completion:];
-                   [self presentViewController:picker animated:YES completion:nil];
-               }
-               else
-               {
-                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error accessing photo library!"
-                                                                   message:@"Device does not support\
-                                         a photo library!"
-                                                                  delegate:nil
-                                                         cancelButtonTitle:@"Drat"
-                                                         otherButtonTitles:nil];
-                   [alert show];
+    palette.count = 0;
+    NSString *tempPicture = [[NSBundle mainBundle] pathForResource:@"tempPicture" ofType:@"png"];
+    NSLog(@"temp:%@",tempPicture);
+    BOOL K= [fileMgr copyItemAtPath:tempPicture toPath:[palette path] error:&error];
+    if (K ==YES) {
+        NSLog(@"YES");
+    }
+    
+    NSArray *undoFileArray1 = [fileMgr contentsOfDirectoryAtPath:[palette undoPicturePath]
+                                                           error:&error];
+    [palette setAc:KNewAction];
+    [palette setNeedsDisplay];
+}
 
-               }
-           }
-       default:
-            break;
-    }//Swicth end
-}//method end
+- (IBAction)saveButton:(id)sender {
+//    UIActionSheet *saveView=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancel" destructiveButtonTitle:@"save paint" otherButtonTitles:nil];
+//    [saveView showInView:self.view];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"保存名称"
+                                                    message:@"请输入名称"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"cancel"
+                                          otherButtonTitles:@"OK", nil];
+    // 基本输入框，显示实际输入的内容
+    //alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+   // UITextField *tf = [alert textFieldAtIndex:0];
+   // tf.keyboardType = UIKeyboardTypeDefault;
+    [alert show];
+
+}
+//=======================actionSheet delgate=========================
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+        NSLog(@"save!!!");
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"保存名称"
+                                                        message:@"请输入名称"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"cancel"
+                                              otherButtonTitles:@"OK", nil];
+        // 基本输入框，显示实际输入的内容
+        //alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        // 用户名，密码登录框
+        //    alert.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        // 密码形式的输入框，输入字符会显示为圆点
+        //    alert.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        
+        //设置输入框的键盘类型
+       // UITextField *tf = [alert textFieldAtIndex:0];
+       // tf.keyboardType = UIKeyboardTypeDefault;
+       // NSString *text = tf.text;
+       // NSLog(@"INPUT11:%@", text);
+        [alert show];
+       
+    }
+
+}
+//=====================alert delegate================================
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"INPUT222:");
+    if (buttonIndex==1) {
+        UITextField *tf = [alertView textFieldAtIndex:0];
+        NSString *text = tf.text;
+        NSLog(@"INPUT222:%@", text);
+    }
+    
+
+}
+
+
+- (IBAction)cameraButton:(id)sender {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        UIImagePickerController *picker=[[UIImagePickerController alloc]init];
+        picker.delegate=self;
+        picker.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+        //[self presentModalViewController:picker animated:YES];
+        //[self presentViewController: picker animated:YES completion:];
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error accessing photo library!"
+                                                        message:@"Device does not support\
+                              a photo library!"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"Drat"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
+    
+}
+//===============================================
 
 
 //implement delegate methood
